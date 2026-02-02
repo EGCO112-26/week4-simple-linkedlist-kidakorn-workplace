@@ -51,7 +51,7 @@ void insertEnd(StudentPtr *head, int id, char *name) {
     }
     temp->next = newNode;
 }
-
+//
 void printList(StudentPtr head) {
     StudentPtr temp = head;
     while (temp != NULL) {
