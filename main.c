@@ -15,9 +15,7 @@ int main(int argc, const char *argv[]) {
 
     StudentPtr head = NULL;
 
-    /* รับข้อมูลจาก command line
-       รูปแบบ: ./test id name id name ...
-    */
+   
     for(int i = 1; i < argc; i += 2) {
         int id = atoi(argv[i]);
         char name[50];
