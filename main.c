@@ -34,11 +34,10 @@ int main(int argc, const char * argv[]) {
         else { tail->next = n; tail = n; }
     }
 
-    /* Print all data in the linked list */
-    printf("Linked list contents:\n");
+    /* Print all data in the linked list (auto-grade format: "id name") */
     Student *cur = head;
     while (cur) {
-        printf("id=%d name=%s\n", cur->id, cur->name);
+        printf("%d %s\n", cur->id, cur->name);
         cur = cur->next;
     }
 
