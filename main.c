@@ -1,54 +1,70 @@
-//
-//  main.c
-//  simple linkedlist
-//
-//  Created by Mingmanas Sivaraksa on 4/2/2566 BE.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "node.h"
 
-int main(int argc, const char * argv[]) {
-    if (argc < 3 || ((argc - 1) % 2) != 0) {
-        fprintf(stderr, "Usage: %s id name [id name]...\n", argv[0]);
-        return 1;
-    }
+typedef struct student* StudentPtr;
 
-    typedef struct student Student;
-    Student *head = NULL, *tail = NULL;
+/* function prototypes */
+StudentPtr createNode(int id, char *name);
+void insertEnd(StudentPtr *head, int id, char *name);
+void printList(StudentPtr head);
+void deleteList(StudentPtr *head);
 
-    for (int i = 1; i < argc; i += 2) {
+int main(int argc, const char *argv[]) {
+
+    StudentPtr head = NULL;
+
+   
+    for(int i = 1; i < argc; i += 2) {
         int id = atoi(argv[i]);
-        const char *name = argv[i + 1];
+        char name[50];
+        strcpy(name, argv[i+1]);
 
-        Student *n = malloc(sizeof *n);
-        if (!n) { perror("malloc"); return 1; }
-        n->id = id;
-        strncpy(n->name, name, NAME_MAX - 1);
-        n->name[NAME_MAX - 1] = '\0';
-        n->next = NULL;
-
-        if (!head) head = tail = n;
-        else { tail->next = n; tail = n; }
+        insertEnd(&head, id, name);
     }
 
-    /* Print all data in the linked list (auto-grade format: "id name") */
-    Student *cur = head;
-    while (cur) {
-        printf("%d %s\n", cur->id, cur->name);
-        cur = cur->next;
-    }
-
-    /* Delete / free all linked list nodes */
-    cur = head;
-    while (cur) {
-        Student *next = cur->next;
-        free(cur);
-        cur = next;
-    }
+    printList(head);
+    deleteList(&head);
 
     return 0;
 }
+StudentPtr createNode(int id, char *name) {
+    StudentPtr newNode = (StudentPtr)malloc(sizeof(struct student));
+    newNode->id = id;
+    strcpy(newNode->name, name);
+    newNode->next = NULL;
+    return newNode;
+}
 
+void insertEnd(StudentPtr *head, int id, char *name) {
+    StudentPtr newNode = createNode(id, name);
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    StudentPtr temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+//
+void printList(StudentPtr head) {
+    StudentPtr temp = head;
+    while (temp != NULL) {
+        printf("%d %s\n", temp->id, temp->name);
+        temp = temp->next;
+    }
+}
+
+void deleteList(StudentPtr *head) {
+    StudentPtr temp;
+    while (*head != NULL) {
+        temp = *head;
+        *head = (*head)->next;
+        free(temp);
+    }
+}

@@ -2,16 +2,18 @@
 //  node.h
 //  simple linkedlist
 //
-//  Created by Mingmanas Sivaraksa on 4/2/2566 BE.
 //
 
 #ifndef node_h
 #define node_h
 
-struct node
-{
-    int value;
-    struct node *next;
+#define NAME_MAX 64
+
+/* Student node used for exercises: id and name */
+struct student {
+    int id;
+    char name[NAME_MAX];
+    struct student *next;
 };
 
 #endif /* node_h */
